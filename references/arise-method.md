@@ -1,29 +1,29 @@
-# The Three Ms of AI™ — Mindset, Method, Machine
+# The ARISE Method™ — Awareness, Roadmap, Implement, Sustain, Evolve
 
-> *Adapted from The Three Ms of AI™. © 2026 Nate Herk. All rights reserved.*
-> *The Three Ms of AI™ is a trademark of Nate Herk.*
+> *The ARISE Method™. © 2026 Shubham Gunjal. All rights reserved.*
+> *The ARISE Method™ is a trademark of Shubham Gunjal.*
 
 > *"The best automation is the one you barely notice. Start by eliminating what doesn't need to exist, then automate what's left with the least amount of AI possible."*
 
-**Boring is Beautiful.**
+**Simplicity Scales.**
 
 ---
 
 ## Why this is in your kit
 
-This framework is the operator brain you'll use every time you run `/level-up`. Three layers, each one builds on the last. Read it once, refer back as needed.
+This framework is the operator brain you'll use every time you run `/level-up`. Five steps, each one builds on the last. Read it once, refer back as needed.
 
-Here's the thing most people get wrong: they think AI automation is about tools. It's not. Tools change every six months. The platform you're using today might not exist next year. What doesn't change is how you THINK about automation, how you DECIDE what to automate, and how you BUILD and OPERATE the thing once it's running. That's what The Three Ms of AI™ gives you. A way to think that works regardless of platform, model, or hype cycle.
+Here's the thing most people get wrong: they think AI automation is about tools. It's not. Tools change every six months. The platform you're using today might not exist next year. What doesn't change is how you THINK about automation, how you DECIDE what to automate, and how you BUILD and OPERATE the thing once it's running. That's what The ARISE Method™ gives you. A way to think that works regardless of platform, model, or hype cycle.
 
 This framework is for everyone. Business owners hearing about AI for the first time. Engineers exploring automation. Consultants who need a methodology they can hand to a client. It scales.
 
 ---
 
-## Layer 1 — MINDSET (How to Think)
+## Step 1 — AWARENESS (How to Think)
 
 Before you touch a single tool, you need to rewire how you approach work. The way you think about tasks determines whether you'll spot automation opportunities or walk past them every day.
 
-### 1. The Default Shift
+### 1. The AI-First Reflex
 
 The core habit: before doing any task the old way, ask "How could AI do this?"
 
@@ -31,13 +31,13 @@ If the answer is "it can't do all of it," the follow-up: "How could AI assist wi
 
 It's never binary. The real question is always **"to what extent can AI be leveraged here?"** Maybe 80%. Maybe 10%. You don't know until you ask.
 
-**Real example.** Updating tracking links across 300+ YouTube video descriptions. The old way: open each video in YouTube Studio, find the link, replace it, save, next. Hours of mind-numbing work. The new way: describe the problem to Claude Code and walk to the kitchen for water. By the time you come back, it's researched the YouTube Data API, figured out quota limits, written a script, and laid out a plan. Approve, run, done. Now you have a reusable system.
+**Real example.** Updating tracking links across 300+ YouTube video descriptions. The old way: open each video in YouTube Studio, find the link, replace it, save, next. Hours of mind-numbing work. The new way: describe the problem to your AIOS and walk to the kitchen for water. By the time you come back, it's researched the YouTube Data API, figured out quota limits, written a script, and laid out a plan. Approve, run, done. Now you have a reusable system.
 
-The Default Shift is like learning to type instead of writing by hand. Once it clicks, you physically cannot go back. Every manual task starts to itch.
+The AI-First Reflex is like learning to type instead of writing by hand. Once it clicks, you physically cannot go back. Every manual task starts to itch.
 
 **One thing to internalize:** AI is better than you think, and improving faster than you think. Client needed infographic visuals; models couldn't deliver. Three months later, new model dropped. Shipped the work. *If AI can't do something today, try again next month. Seriously.*
 
-### 2. The Function Breakdown
+### 2. The Task Decomposition
 
 Your role is a set of functions. Your job description has about five bullet points. Each breaks into dozens of tiny tasks. **You don't automate your whole job. You automate one tiny piece. Then another. Then chain them.**
 
@@ -45,7 +45,7 @@ Think "automate a YouTube video." Sounds impossible. Break it down: ideation, sc
 
 One small task per day. Six months later, hundreds automated. Compounding is real.
 
-### 3. The Curiosity Rule
+### 3. The Why Loop
 
 Never accept AI output without asking why. Ask for three alternatives. Ask which one it thinks is best and why. Push back. Dig in.
 
@@ -53,7 +53,7 @@ This is the antidote to "dark code" — automations or code you don't understand
 
 Treat AI as a mentor, not a vending machine. The vending machine gives you output. The mentor gives you understanding.
 
-### Expect the Dip
+### Expect the Learning Curve
 
 Productivity dip at the start: ~20% less output for the first week or two. New workflows, new prompting cadence. That's normal. Within two weeks, baseline doubles. But you have to push through.
 
@@ -61,9 +61,9 @@ Productivity dip at the start: ~20% less output for the first week or two. New w
 
 ---
 
-## Layer 2 — METHOD (How to Decide)
+## Step 2 — ROADMAP (How to Decide)
 
-Mindset tells you how to think. Method tells you what to do with that thinking. The operational core — turning "I should probably automate something" into "here's exactly what I'm building and why."
+Awareness tells you how to think. Roadmap tells you what to do with that thinking. The operational core — turning "I should probably automate something" into "here's exactly what I'm building and why."
 
 ### 1. Find the Constraint
 
@@ -75,11 +75,11 @@ Two power questions surface everything:
 
 One finds what's broken. The other finds what could scale. Start with the constraint.
 
-### 2. EAD: Eliminate, Automate, Delegate
+### 2. The Priority Filter: Cut, Automate, Assign
 
-For every process, run EAD — in this order.
+For every process, run the Priority Filter — in this order.
 
-**Eliminate first.** *"What happens if we just stop doing this?"* You'd be surprised how many processes exist because they always have. Reports nobody reads. Approval steps that add no value. **If nobody would notice it disappeared, kill it. Don't automate waste.**
+**Cut first.** *"What happens if we just stop doing this?"* You'd be surprised how many processes exist because they always have. Reports nobody reads. Approval steps that add no value. **If nobody would notice it disappeared, kill it. Don't automate waste.**
 
 **Automate second.** Apply the **60/30/10 Golden Rule:**
 - ~60% fully automated (no human touch)
@@ -88,9 +88,9 @@ For every process, run EAD — in this order.
 
 This ratio normalizes expectations. **Full automation is rarely the goal.** If someone promises 100% on anything meaningful, they're selling you something.
 
-**Delegate third.** If a process can't hit 60/30/10 — too complex, too variable, too judgment-dependent — delegate to a person. Not everything should be automated.
+**Assign third.** If a process can't hit 60/30/10 — too complex, too variable, too judgment-dependent — delegate to a person. Not everything should be automated.
 
-The key: nothing stays as-is. Every process gets killed, automated, or handed off.
+The key: nothing stays as-is. Every process gets cut, automated, or assigned.
 
 ### 3. Map the Process
 
@@ -118,7 +118,7 @@ Each step gets an autonomy level:
 
 **Governing principle: default to the LOWEST level that works.**
 
-Most people get this backwards. They hear "AI automation" and jump to L4. That's where things go wrong. Boring is Beautiful. Deterministic beats non-deterministic. **Workflows beat agents.** If a decision doesn't HAVE to be made by AI, don't let AI make it.
+Most people get this backwards. They hear "AI automation" and jump to L4. That's where things go wrong. Simplicity scales. Deterministic beats non-deterministic. **Workflows beat agents.** If a decision doesn't HAVE to be made by AI, don't let AI make it.
 
 Push autonomy up only when you've proven the lower level works.
 
@@ -138,13 +138,11 @@ If your automation doesn't improve a metric in one of the three buckets, stop. *
 
 ---
 
-## Layer 3 — MACHINE (How to Build and Operate)
+## Step 3 — IMPLEMENT (How to Build)
 
-You've got the thinking (Mindset) and the decisions (Method). Now you build and run the thing. Two halves: BUILD and OPERATE.
+You've got the thinking (Awareness) and the decisions (Roadmap). Now you build the thing.
 
-### BUILD
-
-#### 1. The Lego Principle
+### 1. The Building Block Approach
 
 Smallest possible steps. One input, one output per block. Output of block 1 becomes input of block 2.
 
@@ -152,29 +150,33 @@ Start with **zero-AI steps first**. Get the deterministic pieces working — dat
 
 This makes the project less overwhelming and lets you validate as you go. If block 3 produces garbage, you know exactly where to look. **Modularity is freedom.**
 
-#### 2. The Assembly Line
+### 2. The Assembly Line
 
 Each AI step does one specialized job. Like workers on an assembly line.
 
 **Don't build a generalist.** One model call for copywriting. Another for reasoning. Another for classification. Keep them separate. Easier to debug, swap models, adjust prompts.
 
-#### 3. The Validation Chain
+### 3. The Validation Chain
 
 Validate each step's output before chaining. **Do NOT build the whole pipeline and test end-to-end.** That's a recipe for "it doesn't work and I have no idea why."
 
 Build step 1. Run it. Confirm output. Build step 2. Run with step 1's actual output. Confirm. Chain. Add step 3. This is how POCs actually work.
 
-#### 4. The Iteration Mindset
+### 4. The Iteration Mindset
 
 There's no finished product — especially with AI. Deterministic scripts CAN be done (a CSV reformatter, sure). AI steps are always evolving. New models. New capabilities. The prompt that was optimal six months ago is verbose and expensive today.
 
 Ship the POC. Get real-usage feedback. Expand. Iterate. **Perfectionism is the enemy of deployment.**
 
-### OPERATE
+---
 
-#### 5. The Bike Method
+## Step 4 — SUSTAIN (How to Operate)
 
-Roll out in phases, like teaching a kid to ride.
+You've built it. Now run it reliably.
+
+### 5. The Trust Ramp
+
+Roll out in phases, like teaching a kid to ride a bike.
 
 - **Phase 1 — Training wheels.** Run manually. Watch everything. Correct mistakes by hand.
 - **Phase 2 — Guided.** Automation runs but you review every output. It drafts, doesn't send.
@@ -183,9 +185,9 @@ Roll out in phases, like teaching a kid to ride.
 
 Even at 90% confidence, roll out 10% of volume first. Watch a week. Add 20% more. Like drug trials — not full dose to everyone day one.
 
-Use confidence thresholds: high → auto-send, medium → draft queue, low → escalate to human. Tighten or loosen as data accumulates.
+Use confidence thresholds: high → auto-send, medium → draft queue, low → escalate to human.
 
-#### 6. The Intern Rule
+### 6. The New Hire Protocol
 
 Treat AI like a brand-new hire on day one.
 
@@ -196,13 +198,29 @@ Treat AI like a brand-new hire on day one.
 - **Full audit trail.** Visibility into everything it did, spent, created, deleted.
 - **Scoped permissions.** API keys with minimal scope. Exactly what's needed, nothing more.
 
-*"You wouldn't trust someone you just met with your bank account."*
-
-#### 7. The Kill Switch
+### 7. The Kill Switch
 
 Monitor what's running. If an automation consistently needs patches, produces low-quality output, or costs more to maintain than it saves — **tear it down.** Dismantle. Delete.
 
-Don't fall into the sunk cost trap. *"But I spent three weeks building this"* is not a reason to keep something running that doesn't work. **Good operators know when to build AND when to destroy.** The kill switch is just as important as the launch button.
+Don't fall into the sunk cost trap. **Good operators know when to build AND when to destroy.**
+
+---
+
+## Step 5 — EVOLVE (How to Grow)
+
+The final step is what makes this a system, not a one-time setup.
+
+### 8. The Weekly Ritual
+
+Every Friday, run `/level-up`. One interview = one shipped artifact. Over 6 months, that's 26 automations. Over a year, 52. Compounding is real.
+
+### 9. Score Tracking
+
+Run `/audit` weekly. Watch your Four Pillars score climb from Stage 0 (Foundation) to Stage 3 (Autonomous). The number going up is the dopamine loop that keeps you building.
+
+### 10. The Compound Effect
+
+Each automation you ship makes the next one easier. Your AIOS gets smarter. Your context gets richer. Your connections get deeper. After 90 days, you're not the same operator you were on Day 1.
 
 ---
 
@@ -210,27 +228,26 @@ Don't fall into the sunk cost trap. *"But I spent three weeks building this"* is
 
 Three principles that sit above everything else. When in doubt, return to these.
 
-1. **Boring is beautiful.** Predictable beats clever. Default to the simplest, most deterministic approach that gets the job done.
-2. **Deterministic steps can be finished. AI steps are always evolving.** Set expectations — yours and your client's — accordingly. A rule-based filter is done. An AI classifier needs tuning forever.
-3. **Fail fast, learn faster.** Get to your first 10 mistakes safely and quickly. Real learning lives there, not in planning, not in your first 10 successes.
+1. **Simplicity scales.** Predictable beats clever. Default to the simplest, most deterministic approach that gets the job done.
+2. **Deterministic steps can be finished. AI steps are always evolving.** Set expectations accordingly.
+3. **Fail fast, learn faster.** Get to your first 10 mistakes safely and quickly.
 
 ---
 
 ## Branch Frameworks (future hooks)
 
-The 3Ms is the mothership. Specific topics go deeper in dedicated frameworks. Most aren't built into this kit yet. They'll grow into `references/` over time:
+The ARISE Method is the mothership. Specific topics go deeper in dedicated frameworks:
 
 - **The Data Retrieval Hierarchy** — Filters, SQL, Full Context, RAG: when to use which
 - **The Integration Ladder** — API, CLI, Browser Automation, Scraping: hierarchy of reliability
-- **The Error Handling Playbook** — What to do when things break (and they will)
+- **The Error Handling Playbook** — What to do when things break
 - **The Model Selection Guide** — How to pick the right model for the right job
-- **The Context Engineering Framework** — How to feed AI the right information at the right time
-- **The Discovery Playbook** — How to run discovery with a client or team before building
+- **The Context Engineering Framework** — How to feed AI the right information
+- **The Discovery Playbook** — How to run discovery with a client or team
 - **The Security and Permissions Playbook** — Access control, audit trails, risk management
 
-Each plugs into the 3Ms at specific points. Start here, branch out as you need depth.
+Each plugs into the ARISE Method at specific points. Start here, branch out as you need depth.
 
 ---
 
-> *Adapted from The Three Ms of AI™. © 2026 Nate Herk. All rights reserved.*
-> *Full breakdown with diagrams and examples: [insert link to YouTube companion video / public-facing page when published].*
+> *The ARISE Method™. © 2026 Shubham Gunjal. All rights reserved.*

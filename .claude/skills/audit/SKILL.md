@@ -1,29 +1,29 @@
 ---
 name: audit
-description: Use when someone asks for an AIOS audit, asks to score their setup against the Four Cs, or says "is my AIOS working" / "audit my setup" / "find gaps in my AIOS". Produces a Four-Cs scoreboard with top-3 fixes ranked by leverage.
+description: Use when someone asks for an AIOS audit, asks to score their setup against the Four Pillars, or says "is my AIOS working" / "audit my setup" / "find gaps in my AIOS". Produces a Four Pillars scoreboard with top-3 fixes ranked by leverage.
 ---
 
 ## What this skill does
 
-Runs the **Four Cs Audit** on the current Claude Code project. Reads (never writes) the project's operating manual, memory, skills, agents, MCPs, decisions, and references. Scores each of the Four Cs out of 25. Surfaces strengths and the top 3 leverage-weighted gaps with concrete next-step commands.
+Runs the **Four Pillars Audit** on the current Claude Code project. Reads (never writes) the project's operating manual, memory, skills, agents, MCPs, decisions, and references. Scores each of the Four Pillars out of 25. Surfaces strengths and the top 3 leverage-weighted gaps with concrete next-step commands.
 
-**Scope is structural — "is the AIOS built right?"** It is NOT a capability planner. Capability gaps ("you could build a daily brief if you connected calendar") belong to `/level-up`. The audit answers: are the files, folders, registries, and connections in good shape?
+**Scope is structural — "is the AIOS built right?"** It is NOT a capability planner. Capability gaps belong to `/level-up`. The audit answers: are the files, folders, registries, and connections in good shape?
 
-First run is the baseline. Re-run weekly to watch the score climb. That's the compounding hook.
+First run is the baseline. Re-run weekly to watch the score climb.
 
 ## Today's context
 
 - **Date:** !`date +%Y-%m-%d`
 - **Project root:** the current working directory
 
-## The Four Cs (scored 25 each = 100 total)
+## The Four Pillars (scored 25 each = 100 total)
 
-| Layer | Test |
-|---|---|
-| **Context** | Knows the business — identity, team, voice, decisions, references |
-| **Connections** | Reaches the user's stuff — MCPs, integrations, data sources |
-| **Capabilities** | Knows how to do work — skills + agents |
-| **Cadence** | Runs without being asked — schedules, hooks, recurring rituals |
+| Pillar | Test |
+|--------|------|
+| **Foundation** | Knows the business — identity, team, voice, decisions, references |
+| **Integration** | Reaches the user's stuff — MCPs, integrations, data sources |
+| **Automation** | Knows how to do work — skills + agents |
+| **Orchestration** | Runs without being asked — schedules, hooks, recurring rituals |
 
 ## Execution
 
@@ -40,6 +40,7 @@ The audit looks for **patterns and intent**, not exact paths. File names vary. U
 - API scripts: `scripts/*.py|.js|.ts` documented in CLAUDE.md
 - Export pipelines: `data/`, `imports/`, `exports/` with refresh script + last-run timestamp
 - API keys + reference guide: `.env` entries + corresponding `references/{tool}-api.md`
+- Browser automation: `/browser-tool` skill configured for specific sites
 
 **Connections registry:** `connections.md` (anywhere).
 **Reference guides:** `references/{tool}-api.md`, `references/*-reference.md`, or equivalent.
@@ -50,9 +51,9 @@ The audit looks for **patterns and intent**, not exact paths. File names vary. U
 
 Don't penalize for non-canonical names if equivalent intent is captured elsewhere.
 
-### Step 2: Score each C (25 points each)
+### Step 2: Score each Pillar (25 points each)
 
-#### Context (25 pts)
+#### Foundation (25 pts)
 
 | Criterion | Points | How to detect |
 |---|---|---|
@@ -62,9 +63,9 @@ Don't penalize for non-canonical names if equivalent intent is captured elsewher
 | Reference docs exist | 5 | `references/`, `docs/`, or `sops/` has ≥1 file |
 | Decisions captured | 5 | `decisions/log.md` or equivalent has ≥1 entry |
 
-#### Connections (25 pts) — domain-aware, mechanism-agnostic
+#### Integration (25 pts) — domain-aware, mechanism-agnostic
 
-A "reachable" connection counts via ANY mechanism: MCP, script, export pipeline, or `.env` key + `references/{tool}-api.md`. The kit is API-first; the audit doesn't prefer MCPs.
+A "reachable" connection counts via ANY mechanism: MCP, script, export pipeline, `.env` key + `references/{tool}-api.md`, or browser automation via `/browser-tool`. The kit is API-first; the audit doesn't prefer MCPs.
 
 **The 7 Tier-1 Universal Data Domains:**
 
@@ -78,30 +79,30 @@ A "reachable" connection counts via ANY mechanism: MCP, script, export pipeline,
 | 6 | Meeting intelligence | Granola, Otter, Fireflies, Gong, Zoom |
 | 7 | Knowledge / files | Notion, Drive, Dropbox, Confluence, SharePoint |
 
-**Tier-2 (bonus):** AI service API keys (OpenRouter, Anthropic, OpenAI), decisions/history, content/publishing.
+**Tier-2 (bonus):** AI service API keys (OpenRouter, Anthropic, OpenAI), decisions/history, content/publishing, browser automation.
 
 | Criterion | Points | How to detect |
 |---|---|---|
 | Tier-1 domain coverage | 10 | 1.4 pts per tier-1 domain reachable. Round to nearest 0.5. Cap 10. |
 | Reference guide presence | 5 | -1 per connected tool with no `references/{tool}-api.md`. Floor 0. |
-| Auth / pipeline freshness | 5 | -1 per connection in `needs-auth`/`expired` state, or script with no run within 30 days. Floor 0. |
+| Auth / pipeline freshness | 5 | -1 per connection in `needs-auth`/`expired` state. Floor 0. |
 | Documentation in `connections.md` | 3 | 0 if missing; 1 sparse; 2 most; 3 covers all reachable. |
-| Read-AND-write balance | 2 | At least one connection can WRITE (send email, post update, etc.). 0 if all read-only — the AIOS is a viewer not an OS. |
+| Read-AND-write balance | 2 | At least one connection can WRITE. 0 if all read-only. |
 
-#### Capabilities (25 pts)
+#### Automation (25 pts)
 
 | Criterion | Points | How to detect |
 |---|---|---|
-| 3+ skills installed | 10 | Count `.claude/skills/*/SKILL.md` |
-| 1+ user-built skill | 10 | Skill names not in: `onboard`, `audit`, `level-up`, `skill-creator`, `skill-builder`, `decision`, `connect`, `connect-check`, `memory-prune`, `scaffold-skill`, `scaffold-agent`, `draft`, `standup` (canonical AIS-OS + Anthropic shipped skills) |
+| 4+ skills installed | 10 | Count `.claude/skills/*/SKILL.md` |
+| 1+ user-built skill | 10 | Skill names not in: `onboard`, `audit`, `level-up`, `browser-tool`, `skill-creator`, `skill-builder`, `decision`, `connect`, `connect-check`, `memory-prune`, `scaffold-skill`, `scaffold-agent`, `draft`, `standup` |
 | 1+ agent defined | 5 | Count `.claude/agents/*.md` ≥ 1 |
 
-#### Cadence (25 pts)
+#### Orchestration (25 pts)
 
 | Criterion | Points | How to detect |
 |---|---|---|
 | 1+ recurring/scheduled trigger | 10 | `.claude/settings.json` hooks, OR skill name matches `morning-*` / `daily-*` / `weekly-*` / `monthly-*` / `standup` |
-| Recent activity / usage signal | 10 | Files in `.claude/skills/` modified within 30 days, OR `decisions/log.md` has entry within 30 days |
+| Recent activity / usage signal | 10 | Files modified within 30 days, OR `decisions/log.md` has entry within 30 days |
 | Templates folder populated | 5 | `templates/` or `.claude/templates/` has ≥1 file |
 
 ### Step 3: Identify top 3 gaps by leverage
@@ -109,26 +110,24 @@ A "reachable" connection counts via ANY mechanism: MCP, script, export pipeline,
 For each criterion that lost points: leverage = (points lost) × (impact multiplier).
 
 **Impact multipliers:**
-- 0 tier-1 domains reachable: **4x** (AIOS is blind to the business)
-- Operating manual missing or thin: **3x** (foundation)
-- ≤2 tier-1 domains reachable: **3x** (Connections is the gateway to live data)
-- 0 skills: **2x** (no Capabilities = no AIOS)
-- No recurring trigger: **2x** (no Cadence = no autonomy)
-- All connections read-only: **2x** (viewer, not an OS)
-- 0 reference guides for connected tools: **1.5x** (every future skill re-researches the same APIs)
+- 0 tier-1 domains reachable: **4x**
+- Operating manual missing or thin: **3x**
+- ≤2 tier-1 domains reachable: **3x**
+- 0 skills: **2x**
+- No recurring trigger: **2x**
+- All connections read-only: **2x**
+- 0 reference guides for connected tools: **1.5x**
 - No decisions log: **1.5x**
 - All others: **1x**
 
-Sort gaps by leverage descending. Take top 3. For each, write a one-line concrete next step:
-- **Need a new skill?** Recommend `skill-creator` (Anthropic) or `skill-builder` (if local), or "write SKILL.md at `.claude/skills/<name>/SKILL.md` with YAML frontmatter."
+Sort gaps by leverage descending. Take top 3. For each, write a concrete next step:
+- **Need a new skill?** Recommend writing a SKILL.md at `.claude/skills/<name>/SKILL.md`.
 - **Need to log a decision?** "Append to `decisions/log.md`."
-- **Need to reach a tier-1 domain?** Prefer API+script (write `scripts/{tool}_api.py` + save `references/{tool}-api.md`). Recommend `claude mcp add` only if no API path exists.
-- **Connected tool missing a reference guide?** "Research the API once, save endpoints + auth + common queries to `references/{tool}-api.md`."
-- **Need a recurring trigger?** "Add a hook to `.claude/settings.json`, or write a skill named `daily-*` you run each morning."
+- **Need to reach a tier-1 domain?** Prefer API+script. Recommend `/browser-tool` to research the API docs first.
+- **Connected tool missing a reference guide?** "Run `/browser-tool` to read the API docs and save to `references/{tool}-api.md`."
+- **Need a recurring trigger?** "Add a hook to `.claude/settings.json`, or write a skill named `daily-*`."
 
 ### Step 4: Output the report
-
-Print directly in chat (Markdown). Format:
 
 ```
 # AIOS Audit — {date}
@@ -142,39 +141,38 @@ Stage thresholds:
 
 ## Scoreboard
 
-Context        {bar}  {n}/25  {label}
-Connections    {bar}  {n}/25  {label}
-Capabilities   {bar}  {n}/25  {label}
-Cadence        {bar}  {n}/25  {label}
+Foundation      {bar}  {n}/25  {label}
+Integration     {bar}  {n}/25  {label}
+Automation      {bar}  {n}/25  {label}
+Orchestration   {bar}  {n}/25  {label}
 
 (bar = ## per 5pts; label = "Strong" ≥20, "Solid" 15-19, "Thin" 8-14, "Missing" <8)
 
 ## Strengths
-- {1-3 short bullets from highest-scoring criteria}
+- {1-3 short bullets}
 
 ## Top 3 Gaps (ranked by leverage)
 1. **{gap name}** (-{points} × {multiplier})
    → {concrete next-step}
-2. **{gap name}** (-{points} × {multiplier})
-   → {concrete next-step}
-3. **{gap name}** (-{points} × {multiplier})
-   → {concrete next-step}
+2. ...
+3. ...
 
 ## Suggested next: {single most leveraged action}
 
 ---
-Structural gaps only. To explore CAPABILITY gaps (what your AIOS could DO that it can't yet), run /level-up after this audit.
+Structural gaps only. To explore CAPABILITY gaps, run /level-up after this audit.
 ```
 
 ### Step 5: Offer to save the report
 
-After printing, ask: "Save this audit to `audits/audit-{date}.md` so you can track score over time?" If yes, write it (creating `audits/` folder if needed). This is the only writable side effect.
+After printing, ask: "Save this audit to `audits/audit-{date}.md`?" If yes, write it.
 
 ## Notes
 
-- **Read-only by default.** Never modify CLAUDE.md, memory, skills, or any project files. Only optional write is the audit report.
-- **Be flexible about file names.** Don't penalize for using non-canonical names if intent is captured.
+- **Read-only by default.** Never modify CLAUDE.md, memory, skills, or any project files.
+- **Be flexible about file names.** Don't penalize for non-canonical names.
 - **Be honest, not generous.** A 95/100 is a flex. Most setups land 40-70.
 - **Don't suggest skills that don't exist.** Point at what's actually available.
-- **Speed matters.** Report in under 60 seconds wall-clock. Read targeted files, count skill folders without reading each fully (frontmatter only).
-- **Cadence detection is fuzzy.** Infer from skill names if hooks/cron data isn't cleanly available.
+- **Speed matters.** Report in under 60 seconds wall-clock.
+
+> *Part of Arise OS™. The ARISE Method™ is a trademark of Shubham Gunjal. © 2026 Shubham Gunjal.*

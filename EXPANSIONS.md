@@ -1,6 +1,6 @@
 # EXPANSIONS — what to add as you grow
 
-The kit ships lean on purpose. Three skills, six folders, one framework reference. That's it. As you use it, you'll outgrow the base — this guide tells you what to add, when, and why.
+The kit ships lean on purpose. Four skills, six folders, one framework reference. That's it. As you use it, you'll outgrow the base — this guide tells you what to add, when, and why.
 
 The AIOS structure should look like a small, well-run business. Not a hoarder's basement.
 
@@ -15,8 +15,8 @@ The AIOS structure should look like a small, well-run business. Not a hoarder's 
 | `decisions/log.md` | Append-only record of what was decided and why. |
 | `archives/` | Old files. Don't delete — move here. |
 | `connections.md` | Registry of every system your AIOS can reach. |
-| `.claude/skills/` | Your skills: `/onboard`, `/audit`, `/level-up`. Add more via `/level-up`. |
-| `aios-intake.md` | Source-of-truth for `/onboard`. Edit and re-run any time. |
+| `.claude/skills/` | Your skills: `/onboard`, `/audit`, `/level-up`, `/browser-tool`. Add more via `/level-up`. |
+| `arise-intake.md` | Source-of-truth for `/onboard`. Edit and re-run any time. |
 | `CLAUDE.md` | Root operating manual. Filled by `/onboard`. Edit when your role/voice changes. |
 
 ---
@@ -54,7 +54,7 @@ When each surface gets routinely touched:
 Anti-patterns. These look helpful but rot the structure:
 
 - **Don't dump raw email/Slack archives into `references/`.** The wiki is not a doc dump. Interpreted facts only.
-- **Don't build folder-of-folders for organization theater.** Flat with good naming beats deep nesting. If you need a folder hierarchy to find something, you have a search problem, not an organization problem.
+- **Don't build folder-of-folders for organization theater.** Flat with good naming beats deep nesting.
 - **Don't add `notes/`, `misc/`, `tmp/`, or `inbox/`.** Graveyards. Use `archives/` if it's old, write a real file in the right place if it's new.
 - **Don't pre-create folders you don't need yet.** Empty folders are noise. The AIOS will tell you when it's time.
 - **Don't have parallel `decisions.md` and `decisions/log.md`.** Pick one. The kit ships `decisions/log.md`.

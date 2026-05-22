@@ -1,13 +1,13 @@
 ---
 name: onboard
-description: Use on Day 1 of an AIS-OS install, when someone says "set me up", "onboard me", "let's get started", "fill in my AIOS", or has just cloned the kit. Combined wizard — runs the 7-question intake AND scaffolds the Day-1 file set at the end. Idempotent — re-run any time after editing aios-intake.md.
+description: Use on Day 1 of an Arise OS install, when someone says "set me up", "onboard me", "let's get started", "fill in my AIOS", or has just cloned the kit. Combined wizard — runs the 7-question intake AND scaffolds the Day-1 file set at the end. Idempotent — re-run any time after editing arise-intake.md.
 ---
 
 ## What this skill does
 
-Single combined wizard. Reads or writes `aios-intake.md` (the canonical intake), conducts the 7-question interview if the file isn't filled, then scaffolds the Day-1 file set inline at the end of the run. No separate `/scaffold-from-intake` skill — this is one flow.
+Single combined wizard. Reads or writes `arise-intake.md` (the canonical intake), conducts the 7-question interview if the file isn't filled, then scaffolds the Day-1 file set inline at the end of the run. No separate `/scaffold-from-intake` skill — this is one flow.
 
-**The wow moment:** at the end, suggest the closing prompt *"Try this — ask me: what should I focus on this week?"* The user runs it once. That's the wow. There's no `/today` skill to save — the prompt itself plants the Mindset framework (Default Shift) for them to internalize.
+**The wow moment:** at the end, suggest the closing prompt *"Try this — ask me: what should I focus on this week?"* The user runs it once. That's the wow. There's no `/today` skill to save — the prompt itself plants the Awareness step (AI-First Reflex) for them to internalize.
 
 ## When NOT to run this
 
@@ -18,7 +18,7 @@ Single combined wizard. Reads or writes `aios-intake.md` (the canonical intake),
 
 ### Step 1: Read the intake
 
-Read `aios-intake.md`. Check which Q1-Q7 sections have content vs. `[Your answer here]` placeholders.
+Read `arise-intake.md`. Check which Q1-Q7 sections have content vs. `[Your answer here]` placeholders.
 
 - **All filled** → skip Step 2, jump to Step 3 (scaffold).
 - **Some filled** → ask the user: "I see Q1, Q3, Q4 are answered. Want to fill the rest now, or scaffold from what's there?" Their call.
@@ -26,7 +26,7 @@ Read `aios-intake.md`. Check which Q1-Q7 sections have content vs. `[Your answer
 
 ### Step 2: The interview (7 questions, hard cap)
 
-Ask one at a time. Write each answer into `aios-intake.md` as you go (so the user can resume if interrupted).
+Ask one at a time. Write each answer into `arise-intake.md` as you go (so the user can resume if interrupted).
 
 **Q1 — Who are you, what do you sell, who do you sell it to?**
 Identity, offer, ICP. One paragraph each is fine.
@@ -42,7 +42,7 @@ Ask for two samples. One email, one post. Or two of either.
 Quarterly priorities. Push back if they say "grow my business" — make them name a number, a deadline, or a deliverable.
 
 **Q4 — Where does revenue actually land, and where is it tracked?**
-Multiple answers OK. Map to Tier-1 Domain 1 (Revenue/Financials).
+Multiple answers OK. Map to Pillar 2 Domain 1 (Revenue/Financials).
 
 **Q5 — Where do you talk to customers, your team, and the outside world day-to-day?**
 Email (Gmail/Outlook), Slack/Teams/Discord, DMs. Map to Domains 2 + 4.
@@ -74,32 +74,32 @@ Print one screen. Three lines max:
 ✓ Day 1 done. Your AIOS knows who you are, what you sell, what matters this quarter, and how you sound.
 
 Today: ask me — "what should I focus on this week?"
-Tomorrow: pick one tool from connections.md and wire it up (manual MCP install or write a small API script + save references/{tool}-api.md).
+Tomorrow: pick one tool from connections.md and wire it up (manual MCP install or write a small API script + save references/{tool}-api.md). Use /browser-tool to read the API docs.
 Day 7: run /audit to see your score.
 ```
 
 When the user runs the closing prompt ("what should I focus on this week?"), respond using only the new context files. Hit:
 - 3-bullet priority list, in their voice register from Q2
 - Each bullet ties back to a stated 90-day priority from Q3
-- Final line: *"If I had to pick one thing for Monday, it'd be [X], because [reason from priorities]. Want me to draft the first email? And — where could the Default Shift apply here? To what extent could AI be leveraged on this task?"*
+- Final line: *"If I had to pick one thing for Monday, it'd be [X], because [reason from priorities]. Want me to draft the first email? And — where could the AI-First Reflex apply here? To what extent could AI be leveraged on this task?"*
 
-The Default Shift question seeds the Mindset framework before `/level-up` formally introduces it on Day 14.
+The AI-First Reflex question seeds the Awareness step before `/level-up` formally introduces it on Day 14.
 
 ## Critical implementation rules
 
 1. **The 7-question cap is non-negotiable.** Don't add Q8 in conversation.
 2. **Voice paste cannot be skipped.** If the user types samples mid-chat, refuse and tell them to paste from real writing.
-3. **One-shot scaffold.** After Step 2 ends, write Step 3 files in a single batch. No multi-turn confirmation. The user iterates by editing `aios-intake.md` and re-running.
-4. **Idempotent.** Re-running with an edited intake refreshes context files; backs up originals to `archives/intake-{ts}/`. Skips questions already answered unless the user wants to revise.
+3. **One-shot scaffold.** After Step 2 ends, write Step 3 files in a single batch. No multi-turn confirmation.
+4. **Idempotent.** Re-running with an edited intake refreshes context files; backs up originals to `archives/intake-{ts}/`.
 5. **Closing screen is three lines.** Not a menu.
-6. **No extra skills generated.** Don't scaffold `/today`, `/draft`, `/connect`, etc. The kit ships 3 skills; the user authors more via `/level-up`.
-7. **Read-only on `references/3ms-framework.md`.** It already ships in the kit. Don't overwrite.
+6. **No extra skills generated.** The kit ships 4 skills; the user authors more via `/level-up`.
+7. **Read-only on `references/arise-method.md`.** It already ships in the kit. Don't overwrite.
 8. **No `.env` writes.** Don't ask for API keys on Day 1. Connections come Day 2.
 
 ## Verification (for the implementer)
 
 - Cold-test: clone a fresh kit, run `/onboard`, fill 7 answers, scaffold runs, ask the wow prompt, response cites Q1 + Q3 + Q7 specifically. Generic = fail.
-- Idempotency: re-run `/onboard` with one Q3 priority changed. Expected: only `context/priorities.md` and `CLAUDE.md`'s priority section update; backup created in `archives/intake-{ts}/`.
+- Idempotency: re-run `/onboard` with one Q3 priority changed. Expected: only `context/priorities.md` and `CLAUDE.md`'s priority section update; backup created.
 - Voice rejection: type a sample mid-chat. Expected: skill refuses, asks for paste.
 
-> *Adapted from The Three Ms of AI™ © 2026 Nate Herk. The Mindset language used in the closing screen comes from `references/3ms-framework.md`.*
+> *Part of Arise OS™. The ARISE Method™ is a trademark of Shubham Gunjal. © 2026 Shubham Gunjal.*
