@@ -6,6 +6,8 @@ Everything from the 3-hour course, organized by module. All of it is free.
 
 1. **[Starter kit](starter-kit/):** CLAUDE.md template, every prompt from the course in order ([prompts.md](starter-kit/prompts.md)), skills, subagents, safety settings and checklists.
 2. **[AI Operating System template](../):** the repo this folder lives in. Clone it, open it in Claude Code, and run `/onboard` (Module 10).
+3. **[Course website](https://shubham01g.github.io/Shubham-AIOS/claude-code-course/course-site/):** the module pages and prompt cards you see on screen in the video. Also the [course map board](https://shubham01g.github.io/Shubham-AIOS/claude-code-course/course-site/board.html) (use the arrow keys).
+4. **[Prompts as used in the video](video-prompts.md):** the exact prompts I spoke in each module, ready to paste.
 
 **Skills from the video** (copy a folder into `.claude/skills/` in your project, or into `~/.claude/skills/` to use it everywhere):
 
@@ -14,6 +16,7 @@ Everything from the 3-hour course, organized by module. All of it is free.
 | [`/session-handoff`](skills/session-handoff/) | Writes a full summary of your session so you can start a fresh chat without losing anything | 3 |
 | [`/test-html`](skills/test-html/) | Topic + notes → one polished HTML page | 6 |
 | [`/dark-deck`](skills/dark-deck/) | Topic → dark-blue HTML slide deck you can present | 6 |
+| [`/prototype-generator`](skills/prototype-generator/) | Client brief → clickable multi-portal prototype with dashboards, proposal and pricing | 6 |
 | [`/roast`](skills/roast/) | 5 subagents attack your idea in parallel, then a judge gives GO / RESHAPE / KILL | 8 |
 
 > Read a skill before you install it. It runs on your computer.
@@ -27,7 +30,10 @@ The roadmap for the whole course. No resources needed yet.
 - [Claude plans and pricing](https://claude.com/pricing). Claude Code needs Pro or higher. Start on Pro, upgrade only when you hit limits every day.
 - [Google Antigravity (download)](https://antigravity.google/download). The free editor used in the course. Already use VS Code? It works the same way.
 - [Claude Code extension](https://marketplace.visualstudio.com/items?itemName=anthropic.claude-code). In Antigravity: Extensions → search "Claude Code" → publisher Anthropic.
-- [Claude Code docs](https://code.claude.com/docs)
+- [Claude Code docs](https://code.claude.com/docs) · [Claude Code in VS Code / Antigravity](https://code.claude.com/docs/en/vs-code)
+- Optional: [Claude desktop app](https://claude.com/download). Shown in the video, but the course uses the extension.
+- Models: Haiku (smallest), Sonnet, Opus, Fable (most powerful, runs on extra credits). The course uses Opus.
+- Usage limits: a 5-hour window and a weekly limit. Hitting either one pauses Claude until it resets.
 - Prompt: "First build" in [prompts.md](starter-kit/prompts.md)
 
 ## Module 2: Your agency website, live
@@ -38,6 +44,7 @@ The roadmap for the whole course. No resources needed yet.
 - [Claude in Chrome](https://claude.com/chrome): lets Claude open your site, take screenshots and fix what looks off ([Chrome Web Store](https://chromewebstore.google.com/detail/claude/fcoeoabgfenejglbffodgkkbkcdhcgfn))
 - [GitHub](https://github.com) + [GitHub CLI](https://cli.github.com): where your code lives
 - [Vercel](https://vercel.com): puts the site live on a real URL. Alternative: [Netlify](https://www.netlify.com). Vercel's free plan is for non-commercial use.
+- Custom domain (like arisetransform.in): [add a domain on Vercel](https://vercel.com/docs/domains/working-with-domains/add-a-domain), or just ask Claude to walk you through it.
 - Starter kit: [brand.example.md](starter-kit/brand/brand.example.md) · [website rules](starter-kit/rules/website.md)
 
 ## Module 3: Give Claude a brain (CLAUDE.md, context, limits)
@@ -53,13 +60,15 @@ The roadmap for the whole course. No resources needed yet.
 - Prompts: ".env setup", "Deny rules" in [prompts.md](starter-kit/prompts.md)
 
 ## Module 5: Lead Finder app
-- [Apify](https://apify.com) (includes $5 in free credit, not sponsored) · [Google Maps scraper](https://apify.com/compass/crawler-google-places) · [Where to find your API token](https://console.apify.com/settings/integrations)
+- [Apify](https://apify.com) (includes $5 in free credit, not sponsored) · [Google Maps scraper](https://apify.com/compass/crawler-google-places) · [Apollo scrapers](https://apify.com/store?search=apollo) · [Where to find your API token](https://console.apify.com/settings/integrations)
 - [Supabase](https://supabase.com) (database) · [Supabase CLI](https://supabase.com/docs/guides/cli)
 - [Lead scoring cheat sheet](starter-kit/templates/lead-scoring.md)
 - Rule from the video: test with 10 leads first, then 100, then scale.
 
 ## Module 6: Skills that sell
-- [`/test-html`](skills/test-html/) and [`/dark-deck`](skills/dark-deck/): the two skills built in the video
+- [`/test-html`](skills/test-html/), [`/dark-deck`](skills/dark-deck/) and [`/prototype-generator`](skills/prototype-generator/): the three skills built in the video. The public prototype-generator is a clean version with no client content: give it your own brief.
+- [Claude in Chrome](https://claude.com/chrome): lets Claude open websites and take screenshots to learn a style
+- The prompts used to create each skill: [video-prompts.md](video-prompts.md#module-6-skills)
 - Bonus selling skills: [outreach-writer](starter-kit/.claude/skills/outreach-writer/) (drafts only, never sends) · [proposal-writer](starter-kit/.claude/skills/proposal-writer/) · [demo call notes](starter-kit/clients/calls/dr-smith-clinic.md)
 - Docs: [skills](https://code.claude.com/docs/en/skills)
 
@@ -78,15 +87,17 @@ The roadmap for the whole course. No resources needed yet.
 ## Module 9: It works without you (hooks, /loop, routines)
 - Hook "done" sound: in [settings.json](starter-kit/.claude/settings.json) (Windows). On Mac or Linux, ask Claude to change it for your OS.
 - Prompts: "Hook: done sound", "/loop watcher", "Weekly lead refresh" in [prompts.md](starter-kit/prompts.md)
-- Docs: [hooks](https://code.claude.com/docs/en/hooks) · [scheduled tasks](https://code.claude.com/docs/en/scheduled-tasks)
+- Docs: [hooks](https://code.claude.com/docs/en/hooks) · [scheduled tasks (local)](https://code.claude.com/docs/en/scheduled-tasks) · [scheduled tasks in the cloud (runs with your computer off)](https://code.claude.com/docs/en/web-scheduled-tasks)
+- Hooks and `/loop` stop when you close the session. Scheduled tasks keep running.
 - Rule from the video: let automations write drafts only. Run each one yourself at least 3 times before you trust it.
 
 ## Module 10: Build an AI Operating System
 - [AIOS template](../): clone it → open the folder in Claude Code → `/onboard` → answer the 7 questions
-- Tools mentioned for connecting: [Cal.com](https://cal.com) · [OpenAI API](https://platform.openai.com/api-keys) · [Fireflies.ai](https://fireflies.ai) (meeting notes) · [Notion](https://www.notion.com) · [Google Docs](https://docs.google.com)
+- Tools mentioned for connecting: [Cal.com](https://cal.com) · [OpenAI API](https://platform.openai.com/api-keys) · [Fireflies.ai](https://fireflies.ai) (meeting notes) · [Notion](https://www.notion.com) · [Google Docs](https://docs.google.com) · [Google Sheets](https://workspace.google.com/products/sheets/) · [Google Meet](https://meet.google.com) · [Apify](https://apify.com) · [ManyReach](https://www.manyreach.com)
+- What an AIOS is: business context + connections (API/CLI) + skills + a decision log. Hand it over to the client with a simple dashboard. Prompts are in [video-prompts.md](video-prompts.md#module-10-ai-operating-system).
 
 ## Module 11: Getting paid
-- Where clients come from: warm network first ([trust map template](starter-kit/templates/trust-map.csv)), then [Fiverr](https://www.fiverr.com) / [Upwork](https://www.upwork.com), cold email, and posting content consistently.
+- Where clients come from: warm network first ([trust map template](starter-kit/templates/trust-map.csv)), then [Fiverr](https://www.fiverr.com) / [Upwork](https://www.upwork.com), cold email, and posting content consistently on YouTube, Instagram and LinkedIn (give it at least 6 months).
 - Network maths: 100 people you know × 100 people each of them knows = 10,000 people you can reach.
 - **Pricing maths (dental clinic example):**
   - 6 hrs/week of manual work × $25/hr × 52 weeks ≈ **$7,800/year** lost
