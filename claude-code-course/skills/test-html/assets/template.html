@@ -1,0 +1,500 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- REPLACE: page title = the hero headline in plain text -->
+<title>Do It Once, Then Make It a Skill</title>
+<meta name="description" content="A skill is a saved recipe. Teach Claude how you do a task once, and it does it your way forever.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@700;800;900&family=JetBrains+Mono:wght@400;500;700&family=Playfair+Display:ital,wght@1,600;1,700;1,800&display=swap" rel="stylesheet">
+<style>
+/* =========================================================
+   DESIGN TOKENS: keep these. Swap --accent only when the brief
+   asks for a different brand colour.
+   ========================================================= */
+:root{
+  --bg:#070b14;
+  --bg-2:#0a0f1b;
+  --card:#0e1421;
+  --card-2:#121826;
+  --card-head:#1a1b24;
+  --line:rgba(255,255,255,.08);
+  --line-2:rgba(255,255,255,.14);
+  --text:#f5f5f4;
+  --muted:#94a3b8;
+  --dim:#64748b;
+
+  --accent:#e8743b;      /* orange: primary accent */
+  --accent-2:#f2b33d;    /* amber: gradient partner */
+  --teal:#3fd0e0;
+  --green:#4fd18b;
+  --amber:#f2b33d;
+  --violet:#a78bfa;
+  --red:#f87171;
+
+  --cream:#f2efe9;
+  --ink:#1f2937;
+
+  --f-head:"Inter Tight", "Inter", system-ui, sans-serif;
+  --f-body:"Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-serif:"Playfair Display", Georgia, serif;
+  --f-mono:"JetBrains Mono", ui-monospace, Consolas, monospace;
+
+  --wrap:1120px;
+  --narrow:920px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{background:var(--bg);color:var(--text);font-family:var(--f-body);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 24px}
+.narrow{max-width:var(--narrow);margin:0 auto;padding:0 24px}
+
+/* ---------- accent words (italic serif) ---------- */
+.em{font-family:var(--f-serif);font-style:italic;font-weight:700;letter-spacing:-.01em;color:var(--accent)}
+.em.teal{color:var(--teal)}
+.em.green{color:var(--green)}
+.em.amber{color:var(--amber)}
+.em.violet{color:var(--violet)}
+
+/* ---------- eyebrow ---------- */
+.eyebrow{display:flex;justify-content:center;align-items:center;gap:10px;font-size:13px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:var(--accent)}
+.eyebrow::before,.eyebrow::after{content:"";width:4px;height:4px;border-radius:50%;background:currentColor}
+
+/* =========================================================
+   STICKY NAV: hidden on the hero, slides in after scrolling
+   ========================================================= */
+.nav{position:fixed;inset:0 0 auto 0;z-index:50;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;background:rgba(7,11,20,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line);transform:translateY(-100%);transition:transform .35s ease}
+.nav.show{transform:none}
+.brand{font-family:var(--f-head);font-weight:800;font-size:16px;letter-spacing:-.01em;white-space:nowrap}
+.brand b{color:var(--accent);font-weight:800}
+.nav-links{position:absolute;left:50%;transform:translateX(-50%);display:flex;gap:4px}
+.nav-links a{font-size:13px;font-weight:700;color:var(--muted);padding:7px 11px;border-radius:8px;border:1px solid transparent;transition:.2s}
+.nav-links a:hover{color:var(--text)}
+.nav-links a.active{color:var(--text);background:#161b26;border-color:var(--line-2)}
+.nav-spacer{width:140px}
+
+/* =========================================================
+   HERO
+   ========================================================= */
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:120px 24px 100px;overflow:hidden;border-bottom:1px solid var(--line)}
+.hero::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(38% 45% at 8% 18%, rgba(232,116,59,.30), transparent 70%),
+    radial-gradient(32% 40% at 98% 88%, rgba(63,208,224,.14), transparent 70%)}
+.hero-inner{position:relative;max-width:1000px}
+.badge{width:76px;height:76px;margin:0 auto 28px;border-radius:18px;display:grid;place-items:center;font-family:var(--f-head);font-weight:900;font-size:34px;color:#1a1208;background:linear-gradient(135deg,var(--accent),var(--accent-2));box-shadow:0 10px 40px rgba(232,116,59,.35)}
+.hero h1{font-family:var(--f-head);font-weight:800;font-size:clamp(40px,6.4vw,72px);line-height:1.05;letter-spacing:-.045em;margin:22px 0 26px}
+.hero h1 .em{letter-spacing:-.02em}
+.lede{max-width:700px;margin:0 auto;color:#cbd5e1;font-size:19px;line-height:1.6}
+.chips{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:40px}
+.chip{display:inline-flex;align-items:center;gap:8px;padding:12px 20px;border-radius:999px;background:#10141e;border:1px solid var(--line-2);font-weight:700;font-size:15px;transition:.2s}
+.chip:hover{border-color:var(--accent);transform:translateY(-2px)}
+.cue{display:inline-block;margin-top:56px;color:var(--muted);font-size:15px}
+.cue span{display:inline-block;animation:bob 1.8s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(4px)}}
+
+/* =========================================================
+   SECTION SHELL
+   ========================================================= */
+section.block{padding:112px 0;border-bottom:1px solid var(--line)}
+section.block.alt{background:var(--bg-2)}
+.sec-head{text-align:center;margin-bottom:48px}
+.sec-head h2{font-family:var(--f-head);font-weight:800;font-size:clamp(34px,4.8vw,56px);line-height:1.08;letter-spacing:-.04em;margin-top:18px}
+.sec-head h2 .em{letter-spacing:-.015em}
+.sec-head p{margin-top:18px;color:var(--muted);font-size:19px}
+
+/* =========================================================
+   VISUAL 1 · FLOW DIAGRAM (cream panel, step cards + arrows)
+   ========================================================= */
+.flow-panel{background:var(--cream);border-radius:20px;padding:44px 32px 48px;background-image:radial-gradient(rgba(31,41,55,.09) 1px,transparent 1px);background-size:18px 18px;background-color:var(--cream)}
+.flow-label{text-align:center;color:#7c7468;font-size:12.5px;font-weight:700;letter-spacing:.24em;text-transform:uppercase;margin-bottom:26px}
+.flow{display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:14px}
+.step{width:150px;min-height:116px;padding:18px 12px 14px;text-align:center;background:#fff;color:var(--ink);border:1.5px solid #2b2f3a;border-radius:10px;box-shadow:4px 4px 0 rgba(31,41,55,.13);display:flex;flex-direction:column;align-items:center;justify-content:center}
+.step .ico{font-size:28px;line-height:1;margin-bottom:10px}
+.step b{font-size:13.5px;font-weight:700;line-height:1.3}
+.step small{display:block;margin-top:4px;font-size:11.5px;color:#6b7280;line-height:1.35}
+.step.hot{background:#fff3e8;border-color:#f0a070}
+.step.ok{background:#ecf9f1;border-color:#7fd3a0}
+.step.cool{background:#eaf8fb;border-color:#7dd3e0}
+.arrow{font-size:24px;font-weight:700;color:#a0785a}
+
+/* =========================================================
+   "YOUR TURN" divider
+   ========================================================= */
+.yourturn{display:flex;justify-content:center;align-items:center;gap:10px;margin:52px 0 26px;font-size:14px;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--muted)}
+.yourturn strong{color:var(--accent)}
+.yourturn .tri{color:var(--muted);font-size:13px}
+
+/* =========================================================
+   VISUAL 2 · PROMPT / CODE CARD with Copy button
+   ========================================================= */
+.prompt{background:var(--card);border:1px solid var(--line-2);border-radius:14px;overflow:hidden;margin-bottom:24px}
+.prompt-head{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 18px 14px 18px;background:var(--card-head);border-bottom:1px solid var(--line)}
+.prompt-head span{font-size:12.5px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--accent)}
+.copy{font:700 13px var(--f-body);color:#1a1208;background:var(--accent);border:0;border-radius:7px;padding:7px 14px;cursor:pointer;transition:.15s}
+.copy:hover{filter:brightness(1.08)}
+.copy.done{background:var(--green)}
+.prompt pre{margin:0;padding:24px 22px 26px;font-family:var(--f-mono);font-size:15px;line-height:1.78;color:#f1f5f9;white-space:pre-wrap;word-break:break-word}
+.ph{color:var(--accent-2)}   /* [placeholder] the user fills in */
+
+/* =========================================================
+   VISUAL 3 · BAR METER rows (label · animated bar · note)
+   ========================================================= */
+.bars{max-width:840px;margin:0 auto;display:grid;gap:22px}
+.bar-row{display:grid;grid-template-columns:230px 1fr 72px;align-items:center;gap:26px}
+.bar-row b{font-size:16px;font-weight:700}
+.track{height:14px;border-radius:99px;background:#161d2b;overflow:hidden}
+.fill{height:100%;width:0;border-radius:99px;transition:width 1.4s cubic-bezier(.2,.8,.2,1)}
+.fill.green{background:var(--green)}
+.fill.amber{background:var(--amber)}
+.fill.teal{background:var(--teal)}
+.fill.accent{background:var(--accent)}
+.fill.violet{background:var(--violet)}
+.bar-row small{font-family:var(--f-mono);font-size:13px;color:var(--muted);text-align:right;line-height:1.35}
+
+/* =========================================================
+   VISUAL 4 · QUOTE callout (gradient card, serif italic)
+   ========================================================= */
+.quote{max-width:800px;margin:44px auto 0;text-align:center;padding:48px 36px;border:1px solid var(--line-2);border-radius:18px;background:linear-gradient(115deg,rgba(232,116,59,.10),rgba(14,20,33,.6) 50%,rgba(63,208,224,.07))}
+.quote q{display:block;font-family:var(--f-serif);font-style:italic;font-weight:700;font-size:clamp(24px,3vw,32px);line-height:1.3;quotes:"\201C" "\201D"}
+.quote p{margin-top:18px;color:var(--muted);font-size:15.5px}
+
+/* =========================================================
+   VISUAL 5 · CARD GRID (emoji + tag chip + title + text)
+   ========================================================= */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:30px 28px 32px;transition:.25s}
+.card:hover{border-color:var(--line-2);transform:translateY(-3px)}
+.card .ico{font-size:38px;line-height:1;margin-bottom:22px}
+.tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;padding:5px 9px;border-radius:6px;margin-bottom:16px}
+.tag.teal{color:var(--teal);background:rgba(63,208,224,.12)}
+.tag.accent{color:var(--accent);background:rgba(232,116,59,.13)}
+.tag.green{color:var(--green);background:rgba(79,209,139,.12)}
+.tag.amber{color:var(--amber);background:rgba(242,179,61,.12)}
+.tag.violet{color:var(--violet);background:rgba(167,139,250,.13)}
+.card h3{font-family:var(--f-head);font-size:21px;font-weight:800;letter-spacing:-.02em;margin-bottom:12px}
+.card p{color:var(--muted);font-size:16px;line-height:1.6}
+
+/* =========================================================
+   VISUAL 6 · STAT TILES (big count-up numbers)
+   ========================================================= */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:18px}
+.stat{text-align:center;padding:34px 18px;background:var(--card);border:1px solid var(--line);border-radius:16px}
+.stat .num{font-family:var(--f-head);font-weight:900;font-size:52px;letter-spacing:-.04em;line-height:1;background:linear-gradient(135deg,var(--accent),var(--accent-2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.stat .num.teal{background:linear-gradient(135deg,var(--teal),#7ee8f2);-webkit-background-clip:text;background-clip:text}
+.stat .num.green{background:linear-gradient(135deg,var(--green),#a7f3c8);-webkit-background-clip:text;background-clip:text}
+.stat p{margin-top:12px;color:var(--muted);font-size:15px}
+
+/* =========================================================
+   VISUAL 7 · BEFORE / AFTER compare
+   ========================================================= */
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.side{border-radius:16px;padding:30px 28px;border:1px solid var(--line)}
+.side.bad{background:linear-gradient(180deg,rgba(248,113,113,.07),var(--card) 60%);border-color:rgba(248,113,113,.22)}
+.side.good{background:linear-gradient(180deg,rgba(79,209,139,.08),var(--card) 60%);border-color:rgba(79,209,139,.25)}
+.side h3{font-family:var(--f-head);font-size:20px;font-weight:800;letter-spacing:-.02em;margin-bottom:18px}
+.side ul{list-style:none;display:grid;gap:12px}
+.side li{display:flex;gap:10px;color:#cbd5e1;font-size:16px}
+.side.bad li::before{content:"✕";color:var(--red);font-weight:700}
+.side.good li::before{content:"✓";color:var(--green);font-weight:700}
+
+/* =========================================================
+   VISUAL 8 · TERMINAL window
+   ========================================================= */
+.term{max-width:840px;margin:0 auto;background:#05080f;border:1px solid var(--line-2);border-radius:14px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.45)}
+.term-bar{display:flex;align-items:center;gap:8px;padding:12px 16px;background:#11151f;border-bottom:1px solid var(--line)}
+.term-bar i{width:12px;height:12px;border-radius:50%;background:#3a3f4b}
+.term-bar i:nth-child(1){background:#f87171}.term-bar i:nth-child(2){background:#fbbf24}.term-bar i:nth-child(3){background:#4ade80}
+.term-bar span{margin-left:10px;font:500 12.5px var(--f-mono);color:var(--dim)}
+.term pre{padding:22px 22px 26px;font:14.5px/1.8 var(--f-mono);color:#cbd5e1;white-space:pre-wrap}
+.term .p{color:var(--accent)} .term .ok{color:var(--green)} .term .c{color:var(--dim)} .term .h{color:var(--teal)}
+
+/* =========================================================
+   VISUAL 9 · NUMBERED STEPS (vertical timeline)
+   ========================================================= */
+.steps{max-width:760px;margin:0 auto;position:relative;display:grid;gap:26px}
+.steps::before{content:"";position:absolute;left:23px;top:10px;bottom:10px;width:2px;background:linear-gradient(var(--accent),var(--teal))}
+.srow{position:relative;display:grid;grid-template-columns:48px 1fr;gap:22px;align-items:start}
+.srow .n{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;font:800 17px var(--f-head);background:var(--bg);border:2px solid var(--accent);color:var(--accent);z-index:1}
+.srow:nth-child(even) .n{border-color:var(--teal);color:var(--teal)}
+.srow h3{font-family:var(--f-head);font-size:20px;font-weight:800;letter-spacing:-.02em;margin:10px 0 6px}
+.srow p{color:var(--muted);font-size:16px}
+
+/* =========================================================
+   VISUAL 10 · FIGURE (only for images the user supplied)
+   ========================================================= */
+.figure{max-width:960px;margin:0 auto;border-radius:16px;overflow:hidden;border:1px solid var(--line-2);background:var(--card)}
+.figure img{display:block;width:100%;height:auto}
+.figure figcaption{padding:14px 18px;font-size:14px;color:var(--muted);border-top:1px solid var(--line)}
+
+/* =========================================================
+   CLOSING / FOOTER
+   ========================================================= */
+.closing{text-align:center;padding:120px 24px 110px;position:relative;overflow:hidden}
+.closing::before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(40% 60% at 50% 100%,rgba(232,116,59,.16),transparent 70%)}
+.closing h2{position:relative;font-family:var(--f-head);font-weight:800;font-size:clamp(34px,4.8vw,54px);letter-spacing:-.04em;line-height:1.08}
+.closing p{position:relative;margin:18px auto 34px;color:var(--muted);max-width:600px;font-size:18px}
+.btn{position:relative;display:inline-flex;align-items:center;gap:10px;padding:15px 26px;border-radius:12px;font-weight:700;color:#1a1208;background:linear-gradient(135deg,var(--accent),var(--accent-2));box-shadow:0 10px 30px rgba(232,116,59,.3);transition:.2s}
+.btn:hover{transform:translateY(-2px)}
+footer{padding:28px 24px;text-align:center;color:var(--dim);font-size:13px;border-top:1px solid var(--line)}
+
+/* ---------- scroll progress pill (bottom centre) ---------- */
+.pill{position:fixed;left:50%;bottom:12px;transform:translateX(-50%);width:42px;height:7px;border-radius:99px;border:1.5px solid rgba(255,255,255,.45);overflow:hidden;z-index:40;background:rgba(7,11,20,.6)}
+.pill i{display:block;height:100%;width:0;background:var(--accent)}
+
+/* ---------- reveal on scroll ---------- */
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .8s ease,transform .8s ease}
+.reveal.in{opacity:1;transform:none}
+
+/* ---------- responsive ---------- */
+@media (max-width:900px){
+  .nav-links,.nav-spacer{display:none}
+}
+@media (max-width:720px){
+  body{font-size:16px}
+  section.block{padding:80px 0}
+  .bar-row{grid-template-columns:1fr;gap:8px}
+  .bar-row small{text-align:left}
+  .compare{grid-template-columns:1fr}
+  .flow{flex-direction:column}
+  .arrow{transform:rotate(90deg)}
+  .step{width:100%;max-width:280px}
+  .prompt pre{font-size:13.5px;padding:18px 16px}
+  .quote{padding:34px 20px}
+  .yourturn{font-size:12px;letter-spacing:.16em;flex-wrap:wrap}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+  .reveal{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ===================== NAV ===================== -->
+<!-- REPLACE: brand = short topic name split in two (<b>orange part</b> white part).
+     Links = one per section, labelled 01, 02, 03... (or M0..Mn for a series). -->
+<nav class="nav" id="nav">
+  <a href="#top" class="brand"><b>Claude Code</b> Full Course</a>
+  <div class="nav-links">
+    <a href="#s1">01</a>
+    <a href="#s2">02</a>
+    <a href="#s3">03</a>
+    <a href="#s4">04</a>
+    <a href="#s5">05</a>
+  </div>
+  <span class="nav-spacer"></span>
+</nav>
+
+<!-- ===================== HERO ===================== -->
+<header class="hero" id="top">
+  <div class="hero-inner">
+    <div class="badge">6</div>  <!-- REPLACE: number, or a single emoji / letter -->
+    <div class="eyebrow">Module 06 &nbsp;•&nbsp; 25 min</div>
+    <h1>Do It Once, <span class="em">Then Make It a Skill</span></h1>
+    <p class="lede">A skill is a saved recipe. Teach Claude how you do a task once, and it does it your way forever: same quality, one command.</p>
+    <div class="chips">
+      <a class="chip" href="#s1">✍️ outreach-writer</a>
+      <a class="chip" href="#s3">📄 proposal-writer</a>
+      <a class="chip" href="#s2">🔁 Feedback loop</a>
+    </div>
+    <a class="cue" href="#s1">Let's build <span>↓</span></a>
+  </div>
+</header>
+
+<main>
+
+<!-- ===================== 01 · FLOW + PROMPTS ===================== -->
+<section class="block" id="s1">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="eyebrow">01 &nbsp;•&nbsp; The method</div>
+      <h2>By Hand First, <span class="em">Skill Second</span></h2>
+    </div>
+
+    <div class="flow-panel reveal">
+      <div class="flow-label">How every skill is born</div>
+      <div class="flow">
+        <div class="step"><div class="ico">✍️</div><b>Do it by hand</b><small>1 email, with Claude</small></div>
+        <div class="arrow">→</div>
+        <div class="step"><div class="ico">🗣️</div><b>Your feedback</b><small>"shorter, less formal"</small></div>
+        <div class="arrow">→</div>
+        <div class="step hot"><div class="ico">🧩</div><b>"Turn it into a skill"</b><small>/outreach-writer</small></div>
+        <div class="arrow">→</div>
+        <div class="step ok"><div class="ico">🔁</div><b>Run it 10×</b><small>same quality</small></div>
+      </div>
+    </div>
+
+    <div class="narrow" style="padding:0">
+      <div class="yourturn reveal"><span class="tri">▶</span><strong>Your turn</strong> · Pause, copy, paste</div>
+
+      <div class="prompt reveal">
+        <div class="prompt-head"><span>Do it once by hand</span><button class="copy">Copy</button></div>
+<pre>Take the top lead from my Lead Finder database. Read their website and Google reviews.
+Write a short cold email from me:
+- under 90 words, plain text, no links
+- open with one specific thing about THEIR business
+- one problem I can solve for them, one clear ask
+- only claim things I've actually done. If you're not sure, ask me.
+- save it as a DRAFT in clients/drafts/, do not send anything.</pre>
+      </div>
+
+      <div class="prompt reveal">
+        <div class="prompt-head"><span>Run it</span><button class="copy">Copy</button></div>
+<pre>/outreach-writer top 3</pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 02 · BARS + QUOTE ===================== -->
+<section class="block" id="s2">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="eyebrow">02 &nbsp;•&nbsp; Why skills are cheap</div>
+      <h2>Only the <span class="em teal">Top Line</span> Is Always Loaded</h2>
+      <p>That's why you can have 100 skills without slowing Claude down.</p>
+    </div>
+
+    <div class="bars reveal">
+      <div class="bar-row"><b>1 · Name + description</b><div class="track"><div class="fill green" data-w="6"></div></div><small>always</small></div>
+      <div class="bar-row"><b>2 · SKILL.md steps</b><div class="track"><div class="fill amber" data-w="35"></div></div><small>when used</small></div>
+      <div class="bar-row"><b>3 · Extra files + scripts</b><div class="track"><div class="fill teal" data-w="80"></div></div><small>when needed</small></div>
+    </div>
+
+    <div class="quote reveal">
+      <q>One draft is bad. What would you do now?</q>
+      <p>→ Not fix the email. Fix the skill, so it never happens again.</p>
+    </div>
+
+    <div class="narrow" style="padding:0">
+      <div class="yourturn reveal"><span class="tri">▶</span><strong>Your turn</strong> · Pause, copy, paste</div>
+      <div class="prompt reveal">
+        <div class="prompt-head"><span>Fix the skill, not the output</span><button class="copy">Copy</button></div>
+<pre>Update outreach-writer so it never <span class="ph">[describe the problem]</span> again. Show me the change.</pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 03 · CARD GRID ===================== -->
+<section class="block" id="s3">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="eyebrow">03 &nbsp;•&nbsp; Skill #2</div>
+      <h2>Call Notes → <span class="em">Proposal</span></h2>
+    </div>
+    <div class="cards">
+      <div class="card reveal"><div class="ico">🗣️</div><span class="tag teal">In</span><h3>Discovery call notes</h3><p>Their problem, numbers, tools, budget, deadline.</p></div>
+      <div class="card reveal"><div class="ico">📄</div><span class="tag accent">Out</span><h3>A clean proposal</h3><p>Outcome, scope, not included, definition of done, timeline, 3 prices, V2 list.</p></div>
+      <div class="card reveal"><div class="ico">🧾</div><span class="tag green">Bonus</span><h3>The maths</h3><p>What the problem costs them per year, and why your price makes sense.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 04 · STATS + COMPARE ===================== -->
+<section class="block alt" id="s4">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="eyebrow">04 &nbsp;•&nbsp; The payoff</div>
+      <h2>Same Work, <span class="em green">Ten Times Faster</span></h2>
+    </div>
+    <div class="stats reveal">
+      <div class="stat"><div class="num" data-count="10" data-suffix="×">0</div><p>more drafts per hour</p></div>
+      <div class="stat"><div class="num teal" data-count="1">0</div><p>command to run it</p></div>
+      <div class="stat"><div class="num green" data-count="0">0</div><p>prompts to re-type</p></div>
+    </div>
+    <div style="height:28px"></div>
+    <div class="compare reveal">
+      <div class="side bad"><h3>😩 Without a skill</h3><ul><li>Re-explain your style every time</li><li>Quality drifts draft to draft</li><li>Fix the same mistake again and again</li></ul></div>
+      <div class="side good"><h3>😎 With a skill</h3><ul><li>One command, your exact recipe</li><li>Same quality on draft 1 and draft 100</li><li>Fix it once, fixed forever</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 05 · STEPS + TERMINAL ===================== -->
+<section class="block" id="s5">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="eyebrow">05 &nbsp;•&nbsp; Under the hood</div>
+      <h2>What a Skill <span class="em amber">Actually Is</span></h2>
+    </div>
+    <div class="steps">
+      <div class="srow reveal"><div class="n">1</div><div><h3>A folder</h3><p>Lives in ~/.claude/skills/your-skill/</p></div></div>
+      <div class="srow reveal"><div class="n">2</div><div><h3>A SKILL.md file</h3><p>Name, description, and the steps, written in plain English.</p></div></div>
+      <div class="srow reveal"><div class="n">3</div><div><h3>Optional extras</h3><p>Templates, examples, scripts, loaded only when needed.</p></div></div>
+    </div>
+    <div style="height:48px"></div>
+    <div class="term reveal">
+      <div class="term-bar"><i></i><i></i><i></i><span>~/.claude/skills</span></div>
+<pre><span class="p">$</span> tree outreach-writer
+<span class="h">outreach-writer/</span>
+├── SKILL.md         <span class="c"># the recipe</span>
+└── examples.md      <span class="c"># good drafts to copy</span>
+<span class="ok">✓ ready: /outreach-writer</span></pre>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ===================== CLOSING ===================== -->
+<section class="closing">
+  <h2>Do It Once. <span class="em">Never Again.</span></h2>
+  <p>Pick one task you did by hand this week, and turn it into your first skill today.</p>
+  <a class="btn" href="#top">Back to the top ↑</a>
+</section>
+<footer>Claude Code Full Course · Module 06</footer>
+
+<div class="pill"><i id="pill"></i></div>
+
+<script>
+(() => {
+  /* copy buttons: copies the <pre> text inside the same .prompt */
+  document.querySelectorAll('.copy').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const text = btn.closest('.prompt').querySelector('pre').innerText;
+      try { await navigator.clipboard.writeText(text); }
+      catch { const t = document.createElement('textarea'); t.value = text; document.body.appendChild(t); t.select(); document.execCommand('copy'); t.remove(); }
+      btn.textContent = 'Copied ✓'; btn.classList.add('done');
+      setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('done'); }, 1600);
+    });
+  });
+
+  /* reveal + bar fill + count-up when an element scrolls into view */
+  const countUp = el => {
+    const end = +el.dataset.count, suf = el.dataset.suffix || '', t0 = performance.now(), dur = 1200;
+    const tick = now => { const p = Math.min((now - t0) / dur, 1); el.textContent = Math.round(end * (1 - Math.pow(1 - p, 3))) + suf; if (p < 1) requestAnimationFrame(tick); };
+    requestAnimationFrame(tick);
+  };
+  const io = new IntersectionObserver(entries => entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    const el = e.target;
+    el.classList.add('in');
+    el.querySelectorAll('.fill[data-w]').forEach(f => f.style.width = f.dataset.w + '%');
+    el.querySelectorAll('[data-count]').forEach(countUp);
+    io.unobserve(el);
+  }), { threshold: .15 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  /* nav: show after hero, highlight the current section */
+  const nav = document.getElementById('nav'), hero = document.querySelector('.hero');
+  const links = [...document.querySelectorAll('.nav-links a')];
+  const secs = links.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+  const pill = document.getElementById('pill');
+  const onScroll = () => {
+    const y = scrollY;
+    nav.classList.toggle('show', y > hero.offsetHeight * .6);
+    let cur = -1; secs.forEach((s, i) => { if (s.getBoundingClientRect().top < 140) cur = i; });
+    links.forEach((a, i) => a.classList.toggle('active', i === cur));
+    const max = document.documentElement.scrollHeight - innerHeight;
+    pill.style.width = (max > 0 ? y / max * 100 : 0) + '%';
+  };
+  addEventListener('scroll', onScroll, { passive: true }); onScroll();
+})();
+</script>
+</body>
+</html>
